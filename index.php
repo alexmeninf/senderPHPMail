@@ -13,20 +13,20 @@
   <form action="javascript:void(0);" method="post" id="formSend" class="form-main outlined-basic">
     <div class="relative">
       <label class="form-group">
-        <input type="text" name="inputName" id="inputName" placeholder="&nbsp;">
+        <input type="text" name="name" id="name" placeholder="&nbsp;">
         <span class="txt">Nome <sup>*</sup></span>
         <span class="bar"></span>
       </label>
-      <label id="inputName-error" class="error error-msg" for="inputName"></label>
+      <label id="name-error" class="error error-msg" for="name"></label>
     </div>
 
     <div class="relative">
       <label class="form-group">
-        <input type="email" name="inputEmail" id="inputEmail" placeholder="&nbsp;">
+        <input type="email" name="email" id="email" placeholder="&nbsp;">
         <span class="txt">E-mail <sup>*</sup></span>
         <span class="bar"></span>
       </label>
-      <label id="inputEmail-error" class="error error-msg" for="inputEmail"></label>
+      <label id="email-error" class="error error-msg" for="email"></label>
     </div>
 
     <button type="submit">Enviar</button>

@@ -29,10 +29,24 @@ if (empty($values['email'])) {
 
   try {
     // execute the request
-    echo $curl($content);
+    $info = json_encode(
+      array(
+        'success' => 1, 
+        'message' => $curl($content)
+      )
+    );
+
+    print_r($info);
 
   } catch (\RuntimeException $ex) {
     // catch errors
-    die(sprintf('Http error %s with code %d', $ex->getMessage(), $ex->getCode()));
+    $info = json_encode(
+      array(
+        'success' => 0,
+        'message' => 'Http error ' . $ex->getMessage() . ' with code ' . $ex->getCode()
+      )
+    );
+
+    print_r($info);
   }
 }

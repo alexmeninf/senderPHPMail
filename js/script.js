@@ -1,35 +1,33 @@
 $(document).ready(function () { //Quando documento estiver pronto
-
-  $("#formSend").validate({
+  const form = '#formSend';
+  $(form).validate({
     rules: {
-      inputName: {
+      name: {
         required: true
       },
-      inputEmail: {
+      email: {
         required: true,
         email: true,
       }
     },
     messages: {
-      inputName: {
+      name: {
         required: 'O campo nome é obrigatório',
       },
-      inputEmail: {
+      email: {
         required: 'O campo e-mail é obrigatório',
         email: 'Informe um e-mail válido'
       }
     },
-    submitHandler: function (form) {
+    submitHandler: function () {
       // Send informations
       const btnForm = form + ' button[type=submit]';
       const formData = $(form).serialize();
 
       $.ajax({
-        url: 'send.php',
+        url: window.location.href + 'sendAPI.php',
         method: 'POST',
-        data: {
-          formData
-        },
+        data: {formData},
         beforeSend: () => {
           $(btnForm).html('Enviando...');
         }
@@ -43,7 +41,8 @@ $(document).ready(function () { //Quando documento estiver pronto
             type: 'success',
             confirmButtonText: 'Fechar'
           });
-          clear_form_elements(form);         
+          clear_form_elements(form);     
+             
         } else {
           Swal.fire({
             title: 'Algo deu errado!',
