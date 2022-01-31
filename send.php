@@ -61,7 +61,6 @@ if (empty($values['email'])) {
     // Content email
     $mail->isHTML(true);                                                                  // Set email format to HTML
     $mail->WordWrap      = 78;
-    $mail->SingleTo      = TRUE;
     $mail->Subject       = 'Subject';
     $mail->Body          = 'This is the HTML message body <b>in bold!</b>';               // Use $template->getContent($content); to send email in template layout
     $mail->AltBody       = 'This is the body in plain text for non-HTML mail clients';

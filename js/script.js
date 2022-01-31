@@ -1,4 +1,5 @@
 $(document).ready(function () { //Quando documento estiver pronto
+
   $("#formSend").validate({
     rules: {
       inputName: {
@@ -19,40 +20,50 @@ $(document).ready(function () { //Quando documento estiver pronto
       }
     },
     submitHandler: function (form) {
-      var urlData = $(form).serialize();
+      // Send informations
+      const btnForm = form + ' button[type=submit]';
+      const formData = $(form).serialize();
 
       $.ajax({
-        type: "POST",
-        url: "send.php",
-        async: true,
-        data: urlData,
-        success: function (data) {
-          let result = JSON.parse(data);
-
-          if (result['success']) {
-            Swal.fire({
-              icon: 'success',
-              title: 'Enviado!',
-              text: result['message'],
-            });
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Erro ao enviar!',
-              text: result['message'],
-            });
-          }
+        url: 'send.php',
+        method: 'POST',
+        data: {
+          formData
         },
-        beforeSend: function () {
-          buttonSubmit('Enviando...', form);
-        },
-        complete: function () {
-          clear_form_elements(form);
-          buttonSubmit('Enviar novamente', form);
+        beforeSend: () => {
+          $(btnForm).html('Enviando...');
         }
-      });
+      }).done(function(data) {
+        const obj = JSON.parse(data);
 
-      return false;
+        if (obj.success) {
+          Swal.fire({
+            title: 'Enviado!',
+            text: `${obj.message}`,
+            type: 'success',
+            confirmButtonText: 'Fechar'
+          });
+          clear_form_elements(form);         
+        } else {
+          Swal.fire({
+            title: 'Algo deu errado!',
+            text: `${obj.message}`,
+            type: 'error',
+            confirmButtonText: 'Ok'
+          });
+        }
+      }).fail(function(data) {
+        const obj = JSON.parse(data);
+
+        Swal.fire({
+          title: 'Algo deu errado!',
+          text: `${obj.message}`,
+          type: 'error',
+          confirmButtonText: 'Ok'
+        });
+      }).always(function() {
+        $(btnForm).html('Enviar novamente');
+      });
     }
   });
 });
